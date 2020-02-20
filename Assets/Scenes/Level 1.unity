@@ -927,7 +927,7 @@ PrefabInstance:
     - target: {fileID: 2584406002635064394, guid: d20688271e9deae489c44043230844eb,
         type: 3}
       propertyPath: m_Name
-      value: Rocker Ship
+      value: Rocket Ship
       objectReference: {fileID: 0}
     - target: {fileID: 2584406002635064395, guid: d20688271e9deae489c44043230844eb,
         type: 3}

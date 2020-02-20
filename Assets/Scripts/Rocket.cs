@@ -8,6 +8,9 @@ public class Rocket : MonoBehaviour
 {
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
+    [SerializeField] AudioClip mainEngine;
+    [SerializeField] AudioClip winSFX;
+    [SerializeField] AudioClip deathSFX;
     Rigidbody myRigidBody;
     AudioSource myAudioSource;
     enum State { Alive, Dying, Transcending };
@@ -36,11 +39,9 @@ public class Rocket : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Friendly":
-                print("Cool");
                 break;
             case "Finish":
-                state = State.Transcending;
-                Invoke("LoadNextScene", 1f);
+                StartWinSequence();
                 break;
             default:
                 StartCoroutine(ProcessDeath());
@@ -48,10 +49,19 @@ public class Rocket : MonoBehaviour
         }
     }
 
+    private void StartWinSequence()
+    {
+        state = State.Transcending;
+        myAudioSource.Stop();
+        myAudioSource.PlayOneShot(winSFX);
+        Invoke("LoadNextScene", 1f);
+    }
+
     IEnumerator ProcessDeath()
     {
         state = State.Dying;
         myAudioSource.Stop();
+        myAudioSource.PlayOneShot(deathSFX);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -68,7 +78,7 @@ public class Rocket : MonoBehaviour
             myRigidBody.AddRelativeForce(Vector3.up * mainThrust);
             if (!myAudioSource.isPlaying)
             {
-                myAudioSource.Play();
+                myAudioSource.PlayOneShot(mainEngine);
             }
         }
         else
