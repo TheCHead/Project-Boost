@@ -6,11 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
+    [Header("Rocket params")]
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
+
+    [Header("Audio")]
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip winSFX;
     [SerializeField] AudioClip deathSFX;
+
+    [Header("Particle FX")]
+    [SerializeField] ParticleSystem mainEngineParticles;
+    [SerializeField] ParticleSystem winParticles;
+    [SerializeField] ParticleSystem deathParticles;
+
     Rigidbody myRigidBody;
     AudioSource myAudioSource;
     enum State { Alive, Dying, Transcending };
@@ -54,6 +63,7 @@ public class Rocket : MonoBehaviour
         state = State.Transcending;
         myAudioSource.Stop();
         myAudioSource.PlayOneShot(winSFX);
+        winParticles.Play();
         Invoke("LoadNextScene", 1f);
     }
 
@@ -62,6 +72,7 @@ public class Rocket : MonoBehaviour
         state = State.Dying;
         myAudioSource.Stop();
         myAudioSource.PlayOneShot(deathSFX);
+        deathParticles.Play();
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -80,10 +91,12 @@ public class Rocket : MonoBehaviour
             {
                 myAudioSource.PlayOneShot(mainEngine);
             }
+            mainEngineParticles.Play();
         }
         else
         {
             myAudioSource.Stop();
+            mainEngineParticles.Stop();
         }
     }
 
