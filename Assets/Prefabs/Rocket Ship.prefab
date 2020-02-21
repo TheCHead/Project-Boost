@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rcsThrust: 200
-  mainThrust: 1500
+  mainThrust: 125000
   mainEngine: {fileID: 8300000, guid: 1134fd2f740aff841a634b59661e6254, type: 3}
   winSFX: {fileID: 8300000, guid: 94dda1142ebf8a949809e134b5438c44, type: 3}
   deathSFX: {fileID: 8300000, guid: 74db4884a074ba64489f0bfa849d9f97, type: 3}

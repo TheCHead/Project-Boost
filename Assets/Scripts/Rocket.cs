@@ -86,7 +86,7 @@ public class Rocket : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            myRigidBody.AddRelativeForce(Vector3.up * mainThrust);
+            myRigidBody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
             if (!myAudioSource.isPlaying)
             {
                 myAudioSource.PlayOneShot(mainEngine);
